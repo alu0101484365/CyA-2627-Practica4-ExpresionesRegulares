@@ -19,6 +19,7 @@
 #include "attribute.h"
 #include "comment.h"
 #include "tag.h"
+#include "list.h"
 
 /**
  * @brief Clase analizadora de archivos HTML mediante Expresiones Regulares.
@@ -63,41 +64,9 @@ class HTMLAnalyzer {
    */
   void ExtractTagsAndAttributes(const std::string& content);
 
+  // Modificacion
+  void ExtractLists(const std::string& content);
 
-/**
- * Método ExtractLinks para la Variante 1 (URL + TEXT)
- */
-/**
- void HTMLAnalyzer::ExtractLinks(const std::string& content) {
-  // Grupo 1: URL entre comillas de href | Grupo 2: Texto entre <a> y </a>
-  std::regex link_regex("<a\\s+[^>]*href=\"([^\"]*)\"[^>]*>([\\s\\S]*?)</a>", std::regex::icase); // protocol <a\\s+[^>]*href=\"([a-zA-Z0-9]+)://[^\"]*\"[^>]*>([\\s\\S]*?)</a>"
-  auto links_begin = std::sregex_iterator(content.begin(), content.end(), link_regex);
-  auto links_end = std::sregex_iterator();
-
-  for (std::sregex_iterator i = links_begin; i != links_end; ++i) {
-    std::smatch match = *i;
-    size_t pos = match.position();
-
-    // Calcular la línea
-    int line = 1;
-    for (size_t j = 0; j < pos; ++j) {
-      if (content[j] == '\n') line++;
-    }
-
-    std::string url = match.str(1);   // Grupo 1: URL
-    std::string text = match.str(2);  // Grupo 2: Texto interno
-
-    // Limpiar espacios sobrantes en el texto
-    size_t first = text.find_first_not_of(" \t\n\r");
-    size_t last = text.find_last_not_of(" \t\n\r");
-    if (first != std::string::npos && last != std::string::npos) {
-      text = text.substr(first, (last - first + 1));
-    }
-
-    links_.push_back(Link(line, url, text));
-  }
-}
-*/
   std::string input_file_;   
   std::string output_file_;  
 
@@ -110,5 +79,5 @@ class HTMLAnalyzer {
   std::vector<Tag> tags_;           
   std::vector<Attribute> attributes_; 
   std::vector<Comment> comments_;   
-  // std::vector<Link> links_;
+  std::vector<List> lists_;
 };

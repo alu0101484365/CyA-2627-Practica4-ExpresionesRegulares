@@ -6,7 +6,7 @@ CXXFLAGS = -std=c++17 -Wall -Wextra -pedantic
 TARGET = p04_html_analyzer
 
 # Archivos fuente (.cc) y objetos (.o)
-SRCS = main.cc html_analyzer.cc tag.cc attribute.cc comment.cc
+SRCS = main.cc html_analyzer.cc comment.cc tag.cc attribute.cc  list.cc
 OBJS = $(SRCS:.cc=.o)
 
 # Regla principal: compilar el ejecutable

@@ -4,11 +4,11 @@
  * Grado en Ingeniería Informática
  * Asignatura: Computabilidad y Algoritmia
  * Curso: 2.º
- * Práctica 4: Expresiones Regulares (Modificación 1)
- * Autor: [Tu Nombre]
- * Correo: [aluXXXXXXXX@ull.edu.es]
+ * Práctica 4: Expresiones Regulares
+ * Autor: Raul Navarro Cobos
+ * Correo: alu0101484365@ull.edu.es
  * Fecha: 08/10/2026
- * Archivo link.h: Declaración de la clase Link (URL + TEXT).
+ * Archivo List.h: Declaración de la clase List
  */
 
 #pragma once
@@ -18,7 +18,7 @@
 /**
  * @brief Clase que representa un enlace HTML con su URL y texto visible.
  */
-class Link {
+class List {
  public:
   /**
    * @brief Constructor de la clase Link.
@@ -26,7 +26,7 @@ class Link {
    * @param url Dirección URL completa extraída de href.
    * @param text Texto visible entre <a> y </a>.
    */
-  Link(int line, const std::string& url, const std::string& text);
+  List(int line, const std::string& type, const std::string& text);
 
   /**
    * @brief Obtiene la línea del enlace.
@@ -38,16 +38,18 @@ class Link {
    * @brief Obtiene la URL completa.
    * @return Cadena con la URL.
    */
-  std::string GetUrl() const;
+  std::string GetType() const;
 
   /**
    * @brief Obtiene el texto visible.
    * @return Cadena con el texto encerrado.
    */
-  std::string GetText() const;
+  std::string GetTexts() const;
 
  private:
-  int line_;          ///< Línea de aparición.
-  std::string url_;   ///< URL completa del atributo href.
-  std::string text_;  ///< Texto entre <a> y </a>.
+  int line_;
+  std::string type_;
+  std::string text_;
 };
+
+

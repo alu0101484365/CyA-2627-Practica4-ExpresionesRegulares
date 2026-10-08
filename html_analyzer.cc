@@ -12,7 +12,6 @@
  */
 
 #include "html_analyzer.h"
-
 #include <fstream>
 #include <iostream>
 #include <regex>
@@ -156,6 +155,30 @@ void HTMLAnalyzer::ExtractTagsAndAttributes(const std::string& content) {
   }
 }
 
+
+// Modificacion
+void HTMLAnalyzer::ExtractLists(const std::string& content) {
+  std::regex list_regex("<(ol|ul)(?:\\s+[^>]*)?>([\\s\\S]*?)</\\1>", std::regex::icase);
+  auto lists_begin = std::sregex_iterator(content.begin(), content.end(), list_regex);
+  auto lists_end = std::sregex_iterator();
+  for (std::sregex_iterator i = lists_begin; i != lists_end; ++i) {
+    std::smatch match = *i;
+    size_t pos = match.position();
+    int line = 1;
+    for (size_t j = 0; j < pos; ++j) {
+      if (content[j] == '\n') line++;
+    }
+    std::string type = match.str(1);
+    std::string text = match.str(2);
+    size_t first = text.find_first_not_of(" \t\n\r");
+    size_t last = text.find_last_not_of(" \t\n\r");
+    if (first != std::string::npos && last != std::string::npos) {
+      text = text.substr(first, (last - first + 1));
+    }
+    lists_.push_back(List(line, type, text));
+  }
+}
+
 /**
  * @brief Escribe el informe resumen formateado en el archivo de salida.
  */
@@ -211,14 +234,12 @@ bool HTMLAnalyzer::WriteReport() const {
     }
     out << comment.GetText() << "\n\n";
   }
-  /**
-  out << "LINKS:\n";
-  for (const auto& link : links_) {
-    out << "[Line " << link.GetLine() << "]\n";
-    out << "URL: " << link.GetUrl() << "\n";
-    out << "TEXT: " << link.GetText() << "\n\n";
+  out << "LISTS:\n";
+  for (const auto& list : lists_) {
+    out << "[Line " << list.GetLine() << "]\n";
+    out << "TYPE: " << list.GetType() << "\n";
+    out << "TEXT: " << list.GetTexts() << "\n\n";
   }
-  */
   out.close();
   return true;
 }

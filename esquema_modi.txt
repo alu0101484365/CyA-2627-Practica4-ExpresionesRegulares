@@ -1,0 +1,18 @@
+PROGRAM: entrada_modi.html
+
+DESCRIPTION:
+
+STRUCTURE:
+HTML: False
+HEAD: False
+BODY: False
+DOCTYPE: None
+
+TAGS:
+[Line 5] p
+[Line 5] /p
+
+ATTRIBUTES:
+
+COMMENTS:
+LISTS:
